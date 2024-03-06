@@ -6,7 +6,7 @@ import Signup from './components/Signup';
 
 function App() {
   return (
-    <div className='w-full'>
+    <div className='w-full hi'>
       <Routes>
         <Route path='/' element={<Landing/>}/>
         <Route path='login/' element={<Login/>}/>
