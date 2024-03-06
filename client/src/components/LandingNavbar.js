@@ -28,7 +28,7 @@ function LandingNavbar() {
                     Plans & Pricing
                 </span>
             </div>
-            <div className="hamberger mr-5">
+            <div className="hamberger mr-5 block md:hidden">
                 <Menu onClick={handleShowMenu}/>
             </div>
         </div>
