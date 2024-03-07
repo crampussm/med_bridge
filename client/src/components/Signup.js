@@ -4,13 +4,30 @@ import { useNavigate } from 'react-router-dom'
 
 function Signup() {
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ firstname: "", lastname: "", username: "", email: "", password: "", cnfpassword: "" });
+    const [credentials, setCredentials] = useState({ firstname: "", lastname: "", email: "", password: "", cnfpassword: "" });
     const [usernameErrorMsg, setUsernameErrorMsg] = useState('');
     const [emailErrorMsg, setEmailErrorMsg] = useState('');
     const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
+    const access_token = localStorage.getItem("access_token");
     const [buttonState, setButtonState] = useState(false);
-    const handleSignup = () => {
-        console.log("signup");
+    const handleSignup = async(e) => {
+        e.preventDefault();
+
+        const response = await fetch("http://localhost:5000/user/register", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({firstname: credentials.firstname, lastname: credentials.lastname, email: credentials.email, password: credentials.password}),
+        });
+        let json = await response.json();
+
+        if(json.user===true){
+            localStorage.setItem("access_token", json.access_token);
+            navigate('/home');
+          }else{
+            usernameErrorMsg("User already exits");
+          }
     }
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -37,6 +54,12 @@ function Signup() {
     useEffect(() => {
         matchPass();
     }, [matchPass])
+
+    useEffect(()=>{
+        if(access_token){
+          navigate("/home")
+        }
+    }, [])
     return (
         <div>
             <LandingNavbar />
@@ -51,11 +74,6 @@ function Signup() {
                         <div className='my-3 font-font1'>
                             <label htmlFor="lastname" className='my-5 font-font1'>Last name</label>
                             <input type="text" id='lastname' className='border-2 bg-cshoffwhite w-full h-[40px] mt-2 py-2 px-2' name='lastname' value={credentials.lastname} onChange={onChange} required />
-                        </div>
-                        <div className='my-3 font-font1'>
-                            <label htmlFor="username" className='my-5 font-font1'>Username</label>
-                            <input type="text" id='username' className='border-2 bg-cshoffwhite w-full h-[40px] mt-2 py-2 px-2' name='username' value={credentials.username} onChange={onChange} required />
-                            <span id='invemailorusername' className='text-red-600 font-font1 text-sm'>{usernameErrorMsg}</span>
                         </div>
                         <div className='my-3 font-font1'>
                             <label htmlFor="email" className='my-5 font-font1'>Email</label>
