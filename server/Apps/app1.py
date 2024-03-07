@@ -32,6 +32,8 @@ def user_register():
             return jsonify(response), 200
         except Exception as e:
             return jsonify({"user": False}), 401
+    else:
+        pass
     
 
 @app.route("/user/login",methods=['GET', 'POST'])
