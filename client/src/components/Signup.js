@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import LandingNavbar from './LandingNavbar'
-import { useNavigate } from 'react-router-dom'
+import LandingNavbar from './LandingNavbar';
+import bcrypt from 'bcryptjs';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
     const navigate = useNavigate();
@@ -13,12 +14,15 @@ function Signup() {
     const handleSignup = async(e) => {
         e.preventDefault();
 
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(credentials.password, salt);
+
         const response = await fetch("http://localhost:5000/user/register", {
             method: "POST",
             headers: {
-            "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({firstname: credentials.firstname, lastname: credentials.lastname, email: credentials.email, password: credentials.password}),
+            body: JSON.stringify({firstname: credentials.firstname, lastname: credentials.lastname, email: credentials.email, password: hashedPassword}),
         });
         let json = await response.json();
 
@@ -90,11 +94,11 @@ function Signup() {
                             <input type="password" id='cnfpassword' className='border-2 bg-cshoffwhite w-full h-[40px] mt-2 py-2 px-2' name='cnfpassword' value={credentials.cnfpassword} onChange={onChange} required />
                             <span id='wrngcnfpass' className='text-red-600 font-font1 text-sm' hidden>password and confirm password must be same</span>
                         </div>
-                        <button id='signupbutton' className={`mt-5 ${buttonState === false ? "bg-gray-600" : "bg-black"} text-white py-2`} type='submit' disabled>Sign up</button>
+                        <button id='signupbutton' className={`mt-5 ${buttonState === false ? "bg-gray-600 cursor-wait" : "bg-black cursor-pointer"} text-white py-2`} type='submit' disabled>Sign up</button>
                         <div className='flex justify-center my-2'>
                             <p className='my-1 text-amber-700 text-sm'>Already have an account MedBridge?</p>
                         </div>
-                        <button className='bg-cshoffwhite text-black font-font1 border-2 border-black py-2' onClick={() => navigate('/login')}>Login to an existing account</button>
+                        <button className='bg-cshoffwhite text-black font-font1 border-2 border-black py-2' onClick={() => navigate('/user/login')}>Login to an existing account</button>
                     </form>
                 </div>
             </div>

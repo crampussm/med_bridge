@@ -1,43 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react';
 import LandingNavbar from './LandingNavbar';
 import { useNavigate } from 'react-router-dom';
-import bcrypt from 'bcryptjs';
 
-function Login() {
-  const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
-  const [usernameOrEmailErrorMsg, setUsernameOrEmailErrorMsg] = useState('');
-  const access_token = localStorage.getItem("access_token");
-  const handleLogin = async(e) =>{
-    e.preventDefault();
+function Doctorlogin() {
+    const navigate = useNavigate();
+    const [credentials, setCredentials] = useState({ email: "", password: "" });
+    const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
+    const [usernameOrEmailErrorMsg, setUsernameOrEmailErrorMsg] = useState('');
 
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(credentials.password, salt);
-
-    const response = await fetch("http://localhost:5000/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: credentials.email, password: hashedPassword})
-    });
-    let json = await response.json();
-    if(json.user===true){
-      localStorage.setItem("access_token", json.access_token);
-      navigate('/user/home');
-    }else{
-      setUsernameOrEmailErrorMsg("Wrong Email or password");
+    const handleLogin = ()=> {
+        console.log('first');
     }
-  }
-  const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
-  }
-  useEffect(()=>{
-    if(access_token){
-      navigate("/user/home")
+    const onChange = (e) => {
+        setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
-  }, [])
   return (
     <div>
       <LandingNavbar/>
@@ -60,7 +36,7 @@ function Login() {
             <div className='flex justify-center my-2'>
               <p className='my-1 text-amber-700 text-sm'>New to MedBridge?</p>
             </div>
-            <button className=' flex justify-center border-2 border-gray-500 text-black font-font1 py-2' onClick={() => navigate('/user/signup')}>Create a new account</button>
+            <button className=' flex justify-center border-2 border-gray-500 text-black font-font1 py-2' onClick={() => navigate('/doctor/signup')}>Create a new account</button>
           </form>
         </div>
       </div>
@@ -68,4 +44,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Doctorlogin
