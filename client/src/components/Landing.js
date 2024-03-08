@@ -1,10 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import LandingNavbar from './LandingNavbar'
 import Footer from './Footer'
 import { useNavigate } from 'react-router-dom'
 
 function Landing() {
   const navigate = useNavigate();
+  const access_token = localStorage.getItem("access_token");
+  useEffect(()=>{
+    if(access_token){
+      navigate("/home")
+    }
+  }, [])
   return (
     <div className='landing'>
         <LandingNavbar/>

@@ -1,8 +1,13 @@
 import React from 'react'
+import Usernavbar from './Usernavbar'
+import Userhome from './Userhome'
 
 function Userdashboard() {
   return (
-    <div>Userdashboard</div>
+    <div>
+      <Usernavbar/>
+      <Userhome/>
+    </div>
   )
 }
 
