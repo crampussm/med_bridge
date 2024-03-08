@@ -24,7 +24,7 @@ function Signup() {
 
         if(json.user===true){
             localStorage.setItem("access_token", json.access_token);
-            navigate('/home');
+            navigate('/user/home');
           }else{
             usernameErrorMsg("User already exits");
           }
@@ -57,7 +57,7 @@ function Signup() {
 
     useEffect(()=>{
         if(access_token){
-          navigate("/home")
+          navigate("/user/home")
         }
     }, [])
     return (

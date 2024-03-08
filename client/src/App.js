@@ -10,9 +10,9 @@ function App() {
     <div className='w-full'>
       <Routes>
         <Route path='/' element={<Landing/>}/>
-        <Route path='login/' element={<Login/>}/>
-        <Route path='signup/' element={<Signup/>}/>
-        <Route path='home/' element={<Userdashboard/>}/>
+        <Route path='user/login/' element={<Login/>}/>
+        <Route path='user/signup/' element={<Signup/>}/>
+        <Route path='user/home/' element={<Userdashboard/>}/>
       </Routes>
     </div>
   );

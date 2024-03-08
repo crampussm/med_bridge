@@ -20,7 +20,7 @@ function Login() {
     let json = await response.json();
     if(json.user===true){
       localStorage.setItem("access_token", json.access_token);
-      navigate('/home');
+      navigate('/user/home');
     }else{
       setUsernameOrEmailErrorMsg("Wrong Email or password");
     }
@@ -30,7 +30,7 @@ function Login() {
   }
   useEffect(()=>{
     if(access_token){
-      navigate("/home")
+      navigate("/user/home")
     }
   }, [])
   return (

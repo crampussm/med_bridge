@@ -8,7 +8,7 @@ function Landing() {
   const access_token = localStorage.getItem("access_token");
   useEffect(()=>{
     if(access_token){
-      navigate("/home")
+      navigate("/user/home")
     }
   }, [])
   return (
@@ -22,7 +22,7 @@ function Landing() {
             <p className='font-font1 text-2xl my-2'>
               For Anyone, Anywhere, at Anytime.
             </p> 
-            <span className='px-5 py-2 text-white bg-black rounded-3xl w-fit my-5 cursor-pointer' onClick={e=>navigate('/login')}>
+            <span className='px-5 py-2 text-white bg-black rounded-3xl w-fit my-5 cursor-pointer' onClick={e=>navigate('/user/login')}>
               Join Now
             </span>
           </div>
